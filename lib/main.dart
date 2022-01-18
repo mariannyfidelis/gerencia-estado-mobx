@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
             ),
             Observer(
               builder: (context) => Text(
-                '${_counter.counter.value}',
+                '${_counter.counter}',
                 style: Theme.of(context).textTheme.headline4,
               ),
             ),
