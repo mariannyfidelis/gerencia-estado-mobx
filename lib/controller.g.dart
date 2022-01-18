@@ -9,18 +9,41 @@ part of 'controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$Controller on ControllerBase, Store {
-  final _$counterAtom = Atom(name: 'ControllerBase.counter');
+  Computed<String>? _$nomeCompletoComputed;
 
   @override
-  int get counter {
-    _$counterAtom.reportRead();
-    return super.counter;
+  String get nomeCompleto =>
+      (_$nomeCompletoComputed ??= Computed<String>(() => super.nomeCompleto,
+              name: 'ControllerBase.nomeCompleto'))
+          .value;
+
+  final _$nomeAtom = Atom(name: 'ControllerBase.nome');
+
+  @override
+  String get nome {
+    _$nomeAtom.reportRead();
+    return super.nome;
   }
 
   @override
-  set counter(int value) {
-    _$counterAtom.reportWrite(value, super.counter, () {
-      super.counter = value;
+  set nome(String value) {
+    _$nomeAtom.reportWrite(value, super.nome, () {
+      super.nome = value;
+    });
+  }
+
+  final _$sobrenomeAtom = Atom(name: 'ControllerBase.sobrenome');
+
+  @override
+  String get sobrenome {
+    _$sobrenomeAtom.reportRead();
+    return super.sobrenome;
+  }
+
+  @override
+  set sobrenome(String value) {
+    _$sobrenomeAtom.reportWrite(value, super.sobrenome, () {
+      super.sobrenome = value;
     });
   }
 
@@ -28,11 +51,22 @@ mixin _$Controller on ControllerBase, Store {
       ActionController(name: 'ControllerBase');
 
   @override
-  dynamic increment() {
+  void mudarNome(String novoNome) {
     final _$actionInfo = _$ControllerBaseActionController.startAction(
-        name: 'ControllerBase.increment');
+        name: 'ControllerBase.mudarNome');
     try {
-      return super.increment();
+      return super.mudarNome(novoNome);
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void mudarSobrenome(String novoSobrenome) {
+    final _$actionInfo = _$ControllerBaseActionController.startAction(
+        name: 'ControllerBase.mudarSobrenome');
+    try {
+      return super.mudarSobrenome(novoSobrenome);
     } finally {
       _$ControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +75,9 @@ mixin _$Controller on ControllerBase, Store {
   @override
   String toString() {
     return '''
-counter: ${counter}
+nome: ${nome},
+sobrenome: ${sobrenome},
+nomeCompleto: ${nomeCompleto}
     ''';
   }
 }
