@@ -5,7 +5,7 @@ class Client = _ClientBase with _$Client;
 
 abstract class _ClientBase with Store {
   @observable
-  late String name;
+  String name = "";
 
   @action
   changeName(String value) {
@@ -13,7 +13,7 @@ abstract class _ClientBase with Store {
   }
 
   @observable
-  late String email;
+  String email = "";
 
   @action
   changeEmail(String value) {

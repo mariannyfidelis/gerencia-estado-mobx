@@ -5,7 +5,7 @@ import 'controller.dart';
 import 'home_page_controller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -54,15 +54,21 @@ class _HomePageState extends State<HomePage> {
                     "Sobrenome", home_controller.client.changeEmail);
               }),
               const SizedBox(height: 20),
-              Visibility(
-                visible: true,
-                child: Observer(
-                  builder: (context) => Text(
-                    '${controller.nomeCompleto}',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                ),
-              ),
+              // Visibility(
+              //   visible: false,
+              //   child: Observer(
+              //     builder: (context) => Text(
+              //       '${controller.nomeCompleto}',
+              //       style: Theme.of(context).textTheme.headline4,
+              //     ),
+              //   ),
+              // ),
+              Observer(builder: (_) {
+                return OutlinedButton(
+                  onPressed: home_controller.validate ? () {} : () {},
+                  child: Text("Salvar"),
+                );
+              })
             ],
           ),
         ),
