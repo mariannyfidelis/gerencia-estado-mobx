@@ -2,16 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'controller.dart';
+import 'home_page_controller.dart';
 
-class HomePage extends StatelessWidget {
-  late String title;
-  HomePage({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   TextEditingController nController = TextEditingController();
   TextEditingController sController = TextEditingController();
+
+  var home_controller = HomePageController();
+
+  _textField(String label, Function(String novoNome) onchanged,
+      {String Function()? errorText}) {
+    return TextField(
+      //controller: sController,
+      decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+          errorText: errorText == null ? "" : errorText()),
+      onChanged: onchanged,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +35,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text("Gerência de estado com Mobx"),
       ),
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
@@ -27,17 +43,16 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextField(
-                //controller: nController,
-                decoration: const InputDecoration(labelText: "Nome"),
-                onChanged: controller.mudarNome,
+              Observer(
+                builder: (_) {
+                  return _textField("Nome", home_controller.client.changeName);
+                },
               ),
               const SizedBox(height: 20),
-              TextField(
-                //controller: sController,
-                decoration: const InputDecoration(labelText: "Sobrenome"),
-                onChanged: controller.mudarSobrenome,
-              ),
+              Observer(builder: (_) {
+                return _textField(
+                    "Sobrenome", home_controller.client.changeEmail);
+              }),
               const SizedBox(height: 20),
               Visibility(
                 visible: true,
