@@ -7,7 +7,7 @@ class FormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Formulário Page"),
+        title: const Text("Formulário Page"),
       ),
       body: const Padding(padding: EdgeInsets.all(20), child: Center()),
     );
